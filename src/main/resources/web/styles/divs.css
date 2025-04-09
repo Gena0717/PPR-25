@@ -1,0 +1,27 @@
+div.horizontal{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.horizontal > *{
+    margin-right:1em;
+}
+
+div.horizontal >*:last-child{
+    margin-right:0;
+}
+
+div.stretch{
+    align-self: center;
+    justify-content: space-between;
+    width:100%;
+}
+
+div.search-container{
+    display: flex;
+    position: relative;
+    width:100%;
+    margin-bottom: 2em;
+    flex-direction: row-reverse;
+}

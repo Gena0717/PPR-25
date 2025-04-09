@@ -1,0 +1,134 @@
+\scalebox{1}{ % adjust size
+\begin{tikzpicture}
+    \umlactor[x=0,y=0]{User};
+
+    \begin{umlsystem}[x=10,y=0,fill=yellow!10]{Multimodal Parliament Explorer}
+
+        \umlusecase[x=-5,y=-7.5,width=2cm,name=navigation]{page navigation};
+        % pages
+        \umlusecase[x=0,y=0,name=homepage]{view homepage};
+            \umlusecase[x=7,y=0,name=overview]{see methods overview};
+            \umlinclude{homepage}{overview};
+            
+        \umlusecase[x=0,y=-3,name=diagrams]{view diagrams page};
+            \umlusecase[x=7,y=-3,name=viewdiagram]{list available diagrams};
+            \umlinclude{diagrams}{viewdiagram};
+            \umlusecase[x=22,y=0,name=listdiagramspeeches]{list speeches};
+            \umlinclude{diagrams}{listdiagramspeeches};
+            
+        \umlusecase[x=0,y=-6,name=speakerspage]{view speakers page};
+            \umlusecase[x=7,y=-6,name=speakerlist]{list of speakers};
+            \umlinclude{speakerspage}{speakerlist};
+            \umlusecase[x=14,y=-2,name=firstnamesort]{sort by first name};
+            \umlusecase[x=14,y=-3.5,name=lastnamesort]{sort by last name};
+            \umlusecase[x=14,y=-5,name=partysort]{sort by party};
+            \umlextend{firstnamesort}{speakerlist};
+            \umlextend{lastnamesort}{speakerlist};
+            \umlextend{partysort}{speakerlist};
+            \umlusecase[x=7,y=-9,width=5cm,name=speakersearch]{search for speaker (by substring of first name, last name or party abbreviation)};
+            \umlextend{speakersearch}{speakerlist};
+            \umlusecase[x=14,y=-7,name=speakerselect]{select speaker};
+            \umlextend{speakerselect}{speakerlist};
+
+        \umlusecase[x=14,y=-10,name=speakerpage]{view speaker page};
+            \umlinclude{speakerselect}{speakerpage};
+            \umlusecase[x=22,y=-6,name=speakerphoto]{view speaker photo};
+            \umlinclude{speakerpage}{speakerphoto};
+            \umlusecase[x=22,y=-8,name=speakerinfo]{view speaker information};
+            \umlinclude{speakerpage}{speakerinfo};
+            \umlusecase[x=14,y=-12,name=speakerspeechlist]{view list of speaker's speeches};
+            \umlinclude{speakerpage}{speakerspeechlist};
+            \umlusecase[x=21,y=-10,name=speakersessionnrsort]{sort by session number};
+            \umlusecase[x=21,y=-12,name=speakeragendasort]{sort by agenda title};
+            \umlextend{speakersessionnrsort}{speakerspeechlist};
+            \umlextend{speakeragendasort}{speakerspeechlist};
+        
+        \umlusecase[x=0,y=-15,name=speechespage]{view speeches page};
+            \umlusecase[x=7,y=-15,name=listspeeches]{list speeches};
+            \umlinclude{speechespage}{listspeeches};
+            \umlusecase[x=7,y=-12,width=5cm,name=searchspeech]{search for speech (by substring of session number, agenda title, speaker or speaker party)};
+            \umlextend{searchspeech}{listspeeches};
+            \umlusecase[x=2,y=-17,name=speechsessionsort]{sort by session number};
+            \umlusecase[x=5,y=-18,name=speechagendasort]{sort by agendatitle};
+            \umlusecase[x=12,y=-17,name=speechspeakersort]{sort by speaker};
+            \umlusecase[x=10,y=-18,name=speechpartysort]{sort by speaker party};
+            \umlextend{speechsessionsort}{listspeeches};
+            \umlextend{speechagendasort}{listspeeches};
+            \umlextend{speechspeakersort}{listspeeches};
+            \umlextend{speechpartysort}{listspeeches};
+
+            \umlusecase[x=14,y=-15,name=selectspeech]{select speech};
+            \umlHVextend{selectspeech}{listdiagramspeeches};
+            \umlextend{selectspeech}{listspeeches};
+            \umlextend{selectspeech}{speakerspeechlist};
+
+            \umlusecase[x=18,y=-18,name=viewspeech]{view speech};
+            \umlextend{speakerpage}{viewspeech};
+            \umlinclude{selectspeech}{viewspeech};
+            \umlusecase[x=13,y=-20,name=NLP]{view NLP visualizations};
+            \umlusecase[x=15,y=-21,name=entities]{show entities};
+            \umlusecase[x=18,y=-22,name=sentiments]{show sentiments};
+            \umlusecase[x=21,y=-21,name=POS]{show POS};
+            \umlusecase[x=23,y=-20,name=video]{play video};
+            \umlextend{NLP}{viewspeech};
+            \umlextend{entities}{viewspeech};
+            \umlextend{sentiments}{viewspeech};
+            \umlextend{POS}{viewspeech};
+            \umlextend{video}{viewspeech};
+        
+        \umlusecase[x=0,y=-22,name=exportpage]{view export page};
+            \umlusecase[x=11,y=-24,name=exportlistspeeches]{list speeches};
+            \umlinclude{exportpage}{exportlistspeeches};
+            \umlusecase[x=7,y=-21,width=5cm,name=exportesearchspeeches]{search for speech (by substring of session number, agenda title or speaker name)};
+            \umlextend{exportesearchspeeches}{exportlistspeeches};
+            \umlusecase[x=18,y=-24,name=exportsortbysessionnr]{sort by session number};
+            \umlusecase[x=18,y=-26,name=exportsortbyagenda]{sort by agenda title};
+            \umlusecase[x=18,y=-28,name=exportsortbyspeaker]{sort by speaker};
+            \umlusecase[x=15,y=-30,name=exportsortbyparty]{sort by speaker party};
+            \umlusecase[x=11,y=-28,name=exportsortbytopic]{sort by NLP topic};
+            \umlextend{exportsortbysessionnr}{exportlistspeeches};
+            \umlextend{exportsortbyagenda}{exportlistspeeches};
+            \umlextend{exportsortbyspeaker}{exportlistspeeches};
+            \umlextend{exportsortbyparty}{exportlistspeeches};
+            \umlextend{exportsortbytopic}{exportlistspeeches};
+
+            \umlusecase[x=-2,y=-25,name=speechtoggle]{select speech (toggle)};
+            \umlextend{speechtoggle}{exportpage};
+
+            \umlusecase[x=2,y=-26,name=pdfexport]{export selected speeches to pdf};
+            \umlextend{pdfexport}{exportpage};
+            \umlusecase[x=2,y=-28,name=pdfpreview]{preview of pdf};
+            \umlinclude{pdfexport}{pdfpreview};
+
+            \umlusecase[x=7,y=-26,name=xmiexport]{export selected speeches to xmi};
+            \umlextend{xmiexport}{exportpage};
+
+        
+        \umlusecase[x=0,y=-30,name=handbook]{view handbook page};
+            \umlusecase[x=7,y=-30,name=viewhandbook]{view handbook};
+            \umlinclude{handbook}{viewhandbook};
+
+        % user starts out by viewing the homepage, everything else is either included in or extends another use case, so that everything is accessible by starting out on the homepage
+        \umlassoc{User}{homepage};
+
+        % all pages include the page navigation bar
+        \umlCNinclude{homepage}{-5,-1}{navigation};
+        \umlCNinclude{diagrams}{-4,-3}{navigation};
+        \umlinclude{speakerspage}{navigation};
+        \umlinclude{speechespage}{navigation};
+        \umlCNinclude{exportpage}{-4,-21}{navigation};
+        \umlCNinclude{handbook}{-5,-29}{navigation};
+        % and all page extend the navigation bar
+        \umlCNextend{homepage}{-5,-2}{navigation};
+        \umlCNextend{diagrams}{-4,-4}{navigation};
+        \umlVHextend{speakerspage}{navigation};
+        \umlCNextend{speechespage}{-3,-14}{navigation};
+        \umlCNextend{exportpage}{-4,-22}{navigation};
+        \umlCNextend{handbook}{-5,-30}{navigation};
+        
+        %\umlusecase[x=0,y=0]{export speech as pdf};
+        %\umlusecase[x=0,y=-2]{export component as tex};
+        %\umlusecase[x=0,y=-4]{export component as xmi};
+    \end{umlsystem}
+\end{tikzpicture}
+}

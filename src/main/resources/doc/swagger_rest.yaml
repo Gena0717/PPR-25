@@ -1,0 +1,475 @@
+openapi: 3.0.3
+info:
+  title: Multimodal Parliament Explorer
+  description: |-
+    This is the documentation of the RESTful API for the multimodal parliament explorer. It provides endpoints to access and transform the data of parliament speakers, speeches and processed speeches.
+  version: 1.0.11
+servers:
+  - url: https://localhost:27020
+paths:
+  /:
+    get:
+      tags:
+        - landing page
+      summary: Get the landing page of the application.
+      description: Get the landing page of the application allowing you to search for speakers or speeches.
+      operationId: getLandingPage
+      responses:
+        '200':
+          description: Successful operation.
+        '404':
+          description: Page Not Found.
+        '500':
+          description: Server Connection failed.
+  /export/{id}:
+    get:
+      tags:
+        - export
+      summary: Export a speech.
+      description: Export a given speech.
+      operationId: exportSpeech
+      parameters:
+        - name: id
+          in: path
+          description: 'The id of a given speech'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation.
+        '404':
+          description: Page Not Found.
+        '500':
+          description: Server Connection failed.
+  /handbook:
+    get:
+      tags:
+        - handbook
+      summary: Handbook
+      description: Handbook of the page.
+      operationId: getHandbook
+      responses:
+        '200':
+          description: Successful operation.
+        '404':
+          description: Page Not Found.
+        '500':
+          description: Server Connection failed.
+     
+  /speakers:
+    get:
+      tags:
+        - speakers
+      summary: Get all speakers.
+      description: Gather the collection of speakers.
+      operationId: getSpeakers
+      parameters:
+        - name: sort
+          in: query
+          description: 'Sorting options for the list of speakers'
+          required: false
+          schema:
+            type: string
+        - name: q
+          in: query
+          description: 'Search String to generic search for speakers, parties etc.'
+          required: false
+          schema:
+            type: string  
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/speaker"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/speaker"
+        '404':
+          description: Page Not Found.
+        '500':
+          description: Server Connection failed.
+  /speakers/{speaker}:
+    get:
+      tags:
+        - speakers
+      summary: Get a specified speaker.
+      description: Get a specified speaker.
+      operationId: getSpeaker
+      parameters:
+        - name: speaker
+          in: path
+          description: 'The id of a given speaker'
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: 'The current page of the speeches held by the speaker'
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: 'The currently selected sorting option for the speeches'
+          required: false
+          schema:
+            type: string
+        - name: display
+          in: query
+          description: 'The amount of displayed speeches held by the speaker'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/speaker"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/speaker"
+        '404':
+          description: Page Not Found.
+        '500':
+          description: Server Connection failed.
+  /speeches:
+    get:
+      tags:
+        - speeches
+      summary: Get all speeches.
+      description: Gather the collection of speakers.
+      operationId: getSpeeches
+      parameters:
+        - name: page
+          in: query
+          description: 'The current page of the speeches'
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: 'The currently selected sorting option for the speeches'
+          required: false
+          schema:
+            type: string
+        - name: display
+          in: query
+          description: 'The amount of displayed speeches'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/speech"
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/speech"
+                xml:
+                  name: speeches
+        '404':
+          description: Page Not Found.
+        '500':
+          description: Server Connection failed.
+  /speeches/{speech_id}:
+    get:
+      tags:
+        - speeches
+      summary: Get a specified speech.
+      description: Get a specified speech.
+      operationId: getSpeech
+      parameters:
+        - name: speech_id
+          in: path
+          description: 'The id of a given speech'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/speech"
+            application/xml:
+              schema: 
+                $ref: "#/components/schemas/speech"
+        '404':
+          description: Page Not Found.
+        '500':
+          description: Server Connection failed.
+
+components:
+  schemas:
+    speaker:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "1103020"
+        lastname:
+          type: string
+          example: "Lindner"
+        firstname:
+          type: string
+          example: "Christian"
+        member:
+          type: boolean
+        party_name:
+          type: string
+          example: "CDU"
+        location:
+          type: string
+          example: "Buxtehude"
+        nobility:
+          type: string
+        prefix:
+          type: string
+        address_title:
+          type: string
+        academic_title:
+          type: string
+        date_of_birth:
+          type: string
+          format: date-time
+        place_of_birth:
+          type: string
+          example: "Schweinfurt"
+        date_of_death:
+          type: string
+          format: date-time
+        gender:
+          type: string
+        marital_status:
+          type: string
+        religion:
+          type: string
+        profession:
+          type: string
+        curriculum_vitae:
+          type: string
+      xml:
+        name: speaker
+    picture:
+      type: object
+      properties:
+        _id:
+          type: string
+        url:
+          type: string
+        speaker_id:
+          type: string
+        datetime:
+          type: string
+          format: date-time
+        photographer:
+          type: string
+        location:
+          type: string
+      xml:
+        name: picture
+    speech:
+      type: object
+      properties:
+        _id:
+          type: string
+        speaker_id:
+          type: string
+        agenda_item:
+          type: string
+        session_nr:
+          type: integer
+        contents:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              content_tag:
+                type: string
+                example: "speaker introduction"
+              text:
+                type: string
+          xml:
+            name: contents
+        video_id:
+          type: string
+      xml:
+        name: speech
+    processed_speech:
+      type: object
+      properties:
+        _id:
+          type: string
+        sentences:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              begin:
+                type: string
+              end:
+                type: string
+        tokens:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              begin:
+                type: string
+              end:
+                type: string
+              parent:
+                type: string
+              lemma:
+                type: string
+              pos:
+                type: string
+        posTags:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              begin:
+                type: string
+              end:
+                type: string
+              PosValue:
+                type: string
+              coarseValue:
+                type: string
+        lemmas:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              begin:
+                type: string
+              end:
+                type: string
+              value:
+                type: string
+        dependencies:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              begin:
+                type: string
+              end:
+                type: string
+              Governor:
+                type: string
+              Dependent:
+                type: string
+              DependencyType:
+                type: string
+        namedEntities:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              begin:
+                type: string
+              end:
+                type: string
+              value:
+                type: string
+        Topics:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              begin:
+                type: string
+              end:
+                type: string
+              value:
+                type: string
+              score:
+                type: string
+        sentiments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              begin:
+                type: string
+              end:
+                type: string
+              sentiment:
+                type: string
+              pos:
+                type: string
+              neu:
+                type: string
+              neg:
+                type: string
+      xml:
+        name: processed_speech
+    video:
+      type: object
+      properties:
+        _id:
+          type: string
+        video_id:
+          type: string
+        url:
+          type: string
+      xml:
+        name: video
+        
+    processed_video:
+      type: object
+      properties:
+        _id: 
+          type: string
+        audioTokens:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              begin:
+                type: integer
+              end:
+                type: integer
+              timeStart:
+                type: number
+              timeEnd:
+                type: number
+              value:
+                type: string
+      xml:
+        name: processed_video

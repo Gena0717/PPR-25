@@ -1,0 +1,53 @@
+div.export-window{
+    position: fixed;
+    top:0;
+    left:0;
+    margin-top:5em;
+    padding:1em;
+    width:35%;
+    height:90%;
+    background-color: #253d7839;
+    align-content: center;
+}
+
+label.export-card {
+    margin-left:35%;
+    width:65%;
+    align-items: center;
+    line-height: 0px;
+    display:flex;
+    flex-direction: row;
+    background-color: var(--background-color-light-half);
+    border-radius: var(--border-radius);
+    margin-bottom: .5em;
+    padding:.5em 1em;
+    gap:1em;
+}
+
+label.export-card >span{
+    width:33%;
+    color: var(--font-color-main);
+    font-size: var(--font-size-body-large);
+    box-sizing: border-box;
+}
+
+.export-checkbox {
+    width: 25px;
+    height: 25px;
+    accent-color: #158d00d0;
+}
+
+.preview {
+    width:90%;
+    height:75%;
+    margin:1em;
+    padding:.5em;
+    overflow-y:scroll;
+    background-color:white;
+    color:black;
+    opacity:.9;
+}
+
+.export-pages{
+    margin-left:35%;
+}

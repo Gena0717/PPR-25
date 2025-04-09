@@ -1,0 +1,646 @@
+\scalebox{.8}{ % adjust size
+\begin{tikzpicture}
+% JAVA
+\begin{umlpackage}[x=0,y=0]{java}
+
+    \umlclass[x=0,y=7]{Main}{}{
+        \umlstatic{+ main(args : String[])}
+    }
+   
+    % MONGODATABASE
+    \begin{umlpackage}[x=37,y=-30]{database}
+    \umlclass[x=0,y=-6]{FactoryToMongoDB}{}{}
+        \umlclass[x=0,y=0,type=interface]{MongoDatabaseHandler}{}{
+            CreateMDB()
+            \\ReadMDB()
+            \\UpdateMDB()
+            \\DeleteMDB()
+            \\AggregateMDB()
+            \\CountMDB()
+        }
+        
+        \umlclass[x=7,y=0]{MongoDatabaseHandlerImpl}{}{
+            + MongoDatabaseHandlerImpl()
+        }
+
+        \umlimpl{MongoDatabaseHandlerImpl}{MongoDatabaseHandler};
+    \end{umlpackage}
+
+    % EXPORT
+    \begin{umlpackage}[x=0,y=-65]{export}
+
+        \umlclass[x=0,y=0]{TeXMaking}{
+            \umlstatic{- var : int}\\
+            \umlstatic{- fileName : String}
+        }{
+            \umlstatic{+ makeTex(ids : List\tl String\tg, fileType : String)}\\
+            \umlstatic{+ isPdflatexInstalled() : boolean}
+        }
+    
+        \begin{umlpackage}[x=0,y=-7]{tex building blocks}
+
+            \umlclass[x=0,y=0,type=abstract]{Texify}{
+                - fileNamee : String\\
+                - pathFileName : String\\
+                - texText : LinkedList\tl String\tg
+            }{
+                Texify(fileName : String, texPath : String)\\
+                + getFileName() : String\\
+                + getTexText() : LinkedList \tl String\tg\\
+                + addToTexText(text : String)\\
+                + toTex() : String 
+            }
+        
+            \umlclass[x=8,y=0]{TexNLPVisualization}{}{
+             TexNLPVisualization(\\String fileName, String texPath)
+            }
+        
+            \umlclass[x=8,y=-4]{TexSessionProtocol}{}{
+             TexSessionProtocol(String fileName,
+            String texPath,\\
+            SortedMap\tl String, LinkedList\tl TexSpeech\tg\tg agendaItemMap
+            }
+        
+            \umlclass[x=8,y=-7]{TexSpeakerInfo}{}{
+               TexSpeakerInfo(String fileName, String texPath)
+            }
+        
+            \umlclass[x=8,y=-10]{TexSpeech}{
+            }{
+            TexSpeech(String fileName, String texPath, JCas cas)\\
+            TexSpeech(String fileName, String texPath, Document speech)
+            }
+        
+            % a class for the aggregation of multiple of these building blocks, adds \begin and \end{document} in the toTex() method
+            % multiple constructors for the different formats we will need:
+            % a session
+            % multiple sessions
+            % all sessions of one particular speaker
+            % all sessions pertaining to one particular NLP topic
+            \umlclass[x=18,y=-12]{TexDocument}{
+            - String preamble
+            }{
+            TexDocument(
+            String fileName,
+            String texPath,\\
+            LinkedList\tl TexSessionProtocol\tg sessionProtocols)\\
+            }
+        
+            \umlimpl{TexDocument}{Texify};
+            \umlimpl{TexNLPVisualization}{Texify};
+            \umlimpl{TexSessionProtocol}{Texify};
+            \umlimpl{TexSpeakerInfo}{Texify};
+            \umlimpl{TexSpeech}{Texify};
+        
+        
+            \umlclass[x=18,y=0]{TexFactory}{
+                - pdfPath : String\\
+                - texPath : String
+            }{
+                + TexFactory(pdfPath : String, texPath : String)\\
+                + createTexDocument(String fileName,\\LinkedList\tl TexSessionProtocol\tg sessionProtocols) : TexDocument\\
+                + createTexNLPVisualization() : TexNLPVisualization\\
+                + createTexSessionProtocol() : TexSessionProtocol\\
+                + createTexSpeakerInfo() : TexSpeakerInfo\\
+                + createTexSpeech() : TexSpeech\\
+                + compilePDF()
+            }
+        \end{umlpackage}
+
+        \begin{umlpackage}[x=30,y=-7]{xmi building blocks}
+        \umlclass[x=0,y=0,type=abstract]{Xmiify}{
+                - fileNamee : String\\
+                - pathFileName : String\\
+                - texText : LinkedList\tl String\tg
+            }{
+                Xmiify(fileName : String, xmiPath : String)\\
+                + getFileName() : String\\
+                + getXmiText() : LinkedList \tl String\tg\\
+                + addToXmiText(text : String)\\
+                + toXmi() : String 
+            }
+        
+            \umlclass[x=8,y=0]{TXmiNLPVisualization}{}{
+             XmiNLPVisualization(\\String fileName, String xmiPath)
+            }
+        
+            \umlclass[x=8,y=-4]{XmiSessionProtocol}{}{
+             XmiSessionProtocol(String fileName,
+            String xmiPath,\\
+            SortedMap\tl String, LinkedList\tl XmiSpeech\tg\tg agendaItemMap
+            }
+        
+            \umlclass[x=8,y=-7]{XmiSpeakerInfo}{}{
+               XmiSpeakerInfo(String fileName, String xmiPath)
+            }
+        
+            \umlclass[x=8,y=-10]{XmiSpeech}{
+            }{
+            XmiSpeech(String fileName, String xmiPath, JCas cas)\\
+            XmiSpeech(String fileName, String xmiPath, Document speech)
+            }
+        
+            \umlclass[x=18,y=-12]{XmiDocument}{
+            }{
+            XmiDocument(
+            String fileName,
+            String xmiPath,\\
+            LinkedList\tl XmiSessionProtocol\tg sessionProtocols)\\
+            }
+        
+            \umlimpl{XmiDocument}{Xmiify};
+            \umlimpl{XmiNLPVisualization}{Xmiify};
+            \umlimpl{XmiSessionProtocol}{Xmiify};
+            \umlimpl{XmiSpeakerInfo}{Xmiify};
+            \umlimpl{XmiSpeech}{Xmiify};
+        
+        
+            \umlclass[x=18,y=0]{XmiFactory}{
+                - xmiPath : String
+            }{
+                + XmiFactory(xmiPath : String)\\
+                + createXmiDocument(String fileName,\\LinkedList\tl XmiSessionProtocol\tg sessionProtocols) : XmiDocument\\
+                + createXmiNLPVisualization() : XmiNLPVisualization\\
+                + createXmiSessionProtocol() : XmiSessionProtocol\\
+                + createXmiSpeakerInfo() : XmiSpeakerInfo\\
+                + createXmiSpeech() : XmiSpeech
+            }
+        \end{umlpackage}
+        
+    \end{umlpackage}
+
+    % FRONTEND
+    \begin{umlpackage}[x=60,y=-70]{frontend}
+    \umlclass[x=0,y=0,type=interface]{IRenderable}{}{}
+    \umlclass[x=0,y=-2]{SpeakerCardRenderer}{}{}
+    \umlclass[x=0,y=-4]{SpeechCardRenderer}{}{}
+    \end{umlpackage}
+    
+    % HELPERS
+    \begin{umlpackage}[x=40,y=0]{helpers}
+
+        \begin{umlpackage}[x=-4,y=0]{parsing}
+        \umlclass[x=0,y=0]{General}{}{}
+        \umlclass[x=0,y=-2]{Member}{}{}
+        \umlclass[x=0,y=-4]{Protocol}{}{}
+        \end{umlpackage}
+    
+        \umlclass[x=0,y=-6]{Config}{}{}
+        \umlclass[x=0,y=0]{DataChecker}{}{}
+        \umlclass[x=0, y=-2]{Downloader}{}{}
+        \umlclass[x=0,y=-4]{LookupTimer}{}{}
+        \umlclass[x=4,y=-2]{Util}{}{}
+        \umlclass[x=4,y=-4]{VideoDownloader}{}{}
+        
+    \end{umlpackage}
+
+
+    % JCASGEN
+    \begin{umlpackage}[x=60,y=0]{JCasGen}
+        \begin{umlpackage}[x=0,y=0]{annotation}
+        \umlclass[x=0,y=0]{Dependency}{}{}
+        \umlclass[x=0,y=-2]{Lemma}{}{}
+        \umlclass[x=0,y=-4]{NamedEntity}{}{}
+        \umlclass[x=0,y=-6]{Pos}{}{}
+        \umlclass[x=0,y=-8]{Sentence}{}{}
+        \umlclass[x=0,y=-10]{SentimentBert}{}{}
+        \umlclass[x=0,y=-12]{Token}{}{}
+        \umlclass[x=0,y=-14]{Topic}{}{}
+     \end{umlpackage}
+    \end{umlpackage}
+    
+    % NLP
+    \begin{umlpackage}[x=36,y=-50]{nlp}
+        \umlclass[x=0,y=0]{DUUI Reader}{}{}
+        \umlclass[x=0,y=-2]{DUUI Reader Video}{}{}
+        \umlclass[x=0,y=-4]{DUUI Writer}{}{}
+        \umlclass[x=0,y=-6]{DUUI Writer Video}{}{}
+        
+        \umlclass[x=8,y=0]{NLPHandler}{}{
+            init() (for docker initialization)
+            \\runDockerDriver() (loop with analyzeCas())
+            \\analyzeCas() (runs speech through analysis)
+            \\analyzeVideo() (whisper)
+        }
+    \end{umlpackage}
+
+    % PARLIAMENT
+    \begin{umlpackage}[x=0,y=0]{parliament}
+    % since this package is full of interfaces, here's a note on style: methods in interfaces are public and abstract by default, so no need to specify that in the diagram
+    
+        % we need to be able to generate an agenda for the  exporting of pdfs, so we will need to know what agenda item each speech belongs to. i think this might be easiest to achieve by adding a class for agenda items, but i'm open to feedback
+        \umlclass[x=0,y=-33,type=interface]{AgendaItem}{}{
+            getTitle : String\\
+            setTitle(title : String)\\
+            getSession() : Session\\
+            %setSession(session : Session)\\% i don't think we need to allow setting the session, the session should just be set in the constructor, there is probably no reason we would need to change the session here that wouldnt necessitate a larger restructuring anyway
+            getSpeeches() : LinkedList\tl Speech\tg\\
+            addSpeech(speech : Speech)
+        }
+
+        % <<for comment/speechText/quote/speakerIntroduction, source
+        % this is a suggestion, not a definitive answer
+        \umlclass[x=10,y=-30,type=interface]{Content}{}{
+            getID() : String\\
+            getContentTag() : ContentTag\\
+            getText() : String\\
+            %getSource() : \\ probably not necessary, since we don't need to be able to edit who said which comments
+            getSpeech() : Speech
+        }
+
+        % enums contain constants, so according to convention, they should be uppercase
+        \umlclass[x=0,y=-50,type=enum]{ContentTag}{
+            SPEAKER\_INTRODUCTION,\\ %  line naming the following speaker
+            SPEECH\_TEXT,\\ % text of the speech proper
+            QUOTE,\\ 
+            COMMENT
+        }{}
+
+        % can inherit from Party since it needs all the same methods that Party has
+        \umlclass[x=10,y=-4,type=interface]{Grouping}{}{
+            isGroup() : boolean\\ % for differentiating between groups and groupings
+            setGroupStatus(group : boolean)
+        }
+        
+        % the factory is the only way to intantiate the implementations of the parliament objects, accessing the objects should also be handled through the factory
+        % I don't think we need to add addAgendaItem() etc methods since createAgendaItem() should already add. this way only instances created in a factory can be accessed through it.
+        \umlclass[x=10,y=-50,type=interface]{ParliamentFactory}{}{
+            createAgendaItem(\\
+            title : String, session : Session\\
+            ) : AgendaItem\\
+            getAgendaItems() : Set\tl AgendaItem\tg\\
+            createContent(\\
+            contentTag : ContentTag,\\
+            text : String, speech : Speech\\
+            ) : Content\\
+            getContents() : Set\tl Content\tg\\
+            createGrouping(\\
+            name : String, group : boolean\\
+            ) : Grouping\\
+            getGroupings() : Set\tl Grouping\tg\\
+            createParty(name : String) : Party\\
+            getParties() : Set\tl Party\tg\\
+            createPicture(\\
+            pictureNumber : int\\
+            ) : Picture\\
+            getPictures() : Set\tl Picture\tg\\
+            createSession(sessionNr : int) : Session\\
+            getSessions() : Set\tl Session\tg\\
+            createSpeaker(id : String,\\
+            lastName : String, firstName : String\\
+            ) : Speaker\\
+            getSpeakers() : Set\tl Speaker\tg\\
+            createSpeech(id : String,\\
+            speaker : Speaker,\\
+            agendaItem : AgendaItem\\
+            ) : Speech\\
+            getSpeeches() : Set\tl Speech\tg\\
+            createVideo(id : String,\\
+            session : Session, url : String\\
+            ) : Video\\
+            getVideos() : Set\tl Video\tg
+        }
+
+        \umlclass[x=10,y=-8,type=interface]{Party}{}{
+            getName() : String\\
+            setName(name : String)\\
+            getMembers() : Set\tl Speaker\tg\\
+            addMember(member : Speaker)\\
+            removeMember(member : Speaker)
+        }
+
+        % pictures will go in an MDB collection
+        \umlclass[x=0,y=0,type=interface]{Picture}{}{
+            getPictureNumber() : int\\
+            getDescription() : String\\
+            setDescription(description : String)\\
+            getSpeaker() : Speaker\\
+            setSpeaker(speaker : Speaker)\\
+            getLocation() : String\\
+            setLocation(location : String)\\
+            getDateTime() : LocalDateTime\\
+            setDateTime(dateTime : LocalDateTime)\\
+            getPhotographer() : String\\
+            setPhotographer(photographer : String)\\
+            getURL() : String\\
+            setURL(url : String)
+        }
+        
+        \umlclass[x=0,y=-40,type=interface]{Session}{}{
+            getSessionNr() : int\\
+            getDate() : LocalDate\\
+            setDate(date : LocalDate)\\
+            getStartTime() : LocalTime\\
+            setStartTime(startTime : LocalTime)\\
+            getEndTime() : LocalTime\\
+            setEndTime(endTime : LocalTime)\\
+            getAgendaItems : LinkedList\tl AgendaItem\tg\\
+            addAgendaItem(agendaItem : AgendaItem)
+        }
+        
+        \umlclass[x=0,y=-14,type=interface]{Speaker}{}{
+            getID() : String\\ % no setter for IDs, that would defeat the purpose of IDs i think.
+            getFirstName() : String\\
+            setFirstName(firstName : String)\\
+            getLastName() : String\\
+            setLastName(lastName : String)\\
+            isMember() : boolean\\
+            setMembership(membership : boolean)\\
+            getLocation() : String\\
+            setLocation(location : String)\\
+            getNobility() : String\\
+            setNobility(nobility : String)\\
+            getPrefix : String\\
+            setPrefix(prefix : String)\\
+            getAddressTitle() : String\\
+            setAddressTitle(addressTitle : String)\\
+            getAcademicTitle() : String\\
+            setAcademicTitle(academicTitle : String)\\
+            getDateOfBirth() : LocalDate\\
+            setDateOfBirth(dateOfBirth : LocalDate)\\
+            getPlaceOfBirth() : String\\
+            setPlaceOfBirth(placeOfBirth : String)\\
+            getCountryOfBirth() : String\\
+            setCountryOfBirth(countryOfBirth : String)\\
+            getDateOfDeath() : LocalDate\\
+            setDateOfDeath(dateOfDeath : LocalDate)\\
+            getGender() : String\\
+            setGender(gender : String)\\
+            getMaritalStatus() : String\\
+            setMaritalStatus(maritalStatus : String)\\
+            getReligion() : String\\
+            setReligion(religion : String)\\
+            getProfession() : String\\
+            setProfession(profession : String)\\
+            getCurriculumVitae() : String\\
+            setCurriculumVitae(curriculumVitae : String)\\
+            getParty() : Party\\
+            setParty(party : Party)\\
+            getGrouping() : Grouping\\
+            setGrouping(grouping : Grouping)\\
+            getPicture() : Picture\\
+            setPicture(picture : Picture)
+        }
+        
+        \umlclass[x=0,y=-27,type=interface]{Speech}{}{
+            getID() : String\\
+            getSpeaker() : Speaker\\
+            setSpeaker(speaker : Speaker)\\
+            getAgendaItem() : AgendaItem\\
+            getSession() : Session\\
+            getContents() : LinkedList\tl Content\tg\\
+            addContent(content : Content)\\
+            getVideo() : Video\\
+            setVideo(video : Video)
+        }
+
+        \umlclass[x=10,y=-20,type=interface]{Video}{}{
+            getID() : String\\
+            getSession() : Session\\
+            getURL() : String\\
+            setURL(url : String)
+        }
+
+        \umlinherit{Grouping}{Party};
+
+        \umlcompo[mult1=1,mult2=1...*]{AgendaItem}{Speech};
+        \umlcompo[mult1=1,mult2=1...*]{Session}{AgendaItem};
+        \umlassoc[mult1=1,mult2=0...1]{Speaker}{Picture};
+        \umlassoc[mult1=1,mult2=0...*]{Speaker}{Speech};
+        \umlcompo[mult1=1,mult2=1...*]{Speech}{Content};
+        \umlassoc[mult1=1,mult2=0...1]{Session}{Video};
+        \umlCNaggreg[mult1=0...1,mult2=2...*]{Grouping}{5,-4}{Speaker};
+        \umlCNaggreg[mult1=0...1,mult2=1...*]{Party}{5,-8}{Speaker};
+        \umldep[geometry=-|-, stereo=uses]{ContentTag}{Content};
+        
+        %\umlnote[right=2 of parliament, width=4cm]{parliament}{Abgeordneter$\neq$Speaker.}
+
+        % IMPLEMENTATION
+        \begin{umlpackage}[x=20,y=0]{impl}
+        
+            \umlclass[x=0,y=-33]{AgendaItemImpl}{
+                - title : String\\
+                - session : Session\\
+                - speeches : LinkedList\tl Speech\tg
+            }{
+                $\sim$ AgendaItemImpl(
+                title : String,\\
+                session : Session)
+            }
+
+            \umlclass[x=8,y=-30]{ContentImpl}{
+                - id : String\\ % ID is the ID of the speech + the index of the content in the linked list inside the speech object
+                - contentTag : ContentTag\\
+                - text : String\\
+                %- source : \\
+                - speech : Speech
+            }{
+                $\sim$ ContentImpl(\\
+                contentTag : ContentTag,\\
+                text : String,\\
+                speech : Speech
+                )
+            }
+
+            \umlclass[x=8,y=-4]{GroupingImpl}{
+                - group : boolean
+            }{
+                $\sim$ GroupingImpl(name : String,\\
+                group : boolean)
+            }
+
+            \umlclass[x=0,y=-50]{ParliamentFactoryImpl}{
+                - agendaItems : Set\tl AgendaItem\tg\\
+                - contents : Set\tl Content\tg\\
+                - groupings : Set\tl Grouping\tg\\
+                - parties : Set\tl Party\tg\\
+                - pictures : Set\tl Picture\tg\\
+                - sessions : Set\tl Session\tg\\
+                - speakers : Set\tl Speaker\tg\\
+                - speeches : Set\tl Speech\tg\\
+                - videos : Set\tl Video\tg
+            }{
+                + ParliamentFactoryImpl()
+            }
+
+            \umlclass[x=8,y=-8]{PartyImpl}{
+                - name : String\\
+                - members : Set\tl Speaker\tg 
+            }{
+                $\sim$ PartyImpl(name : String)
+            }
+
+             % pictures will go in an MDB collection
+            \umlclass[x=0,y=0]{PictureImpl}{
+                - pictureNumber : int\\
+                - description : String\\
+                - speaker : Speaker\\
+                - location : String\\
+                - dateTime : LocalDateTime\\
+                - photographer : String\\
+                - url : String
+            }{
+                 $\sim$ PictureImpl(pictureNumber : int)
+            }
+
+            \umlclass[x=0,y=-40]{SessionImpl}{
+                - sessionNr : int\\
+                - date : LocalDate\\
+                - startTime : LocalTime\\
+                - endTime : LocalTime\\
+                - agendaItems : LinkedList\tl AgendaItem\tg
+            }{
+                $\sim$ SessionImpl(sessionNr : int)
+            }
+
+            \umlclass[x=0,y=-14]{SpeakerImpl}{
+            % regarding "historie_von", "historie_bis": those tags are for name changes. Do we want/need to keep track of name changes? Or do we just take the latest name entry and use that?
+                - id : String\\ % could be an int probably?
+                - lastName : String\\
+                - firstName : String\\
+                - member : boolean\\ % primitve datatype, less storage
+                - location : String\\
+                - nobility : String\\
+                - prefix : String\\
+                - addressTitle : String\\
+                - academicTitle : String\\
+                - dateOfBirth : LocalDate\\
+                - placeOfBirth : String\\
+                - countryOfBirth : String\\
+                - dateOfDeath : LocalDate\\
+                - gender : String\\
+                - maritalStatus : String\\
+                - religion : String\\
+                - profession : String\\
+                - curriculumVitae : String\\
+                - party : Party\\
+                - grouping : Grouping\\
+                - picture : Picture
+            }{
+                $\sim$ SpeakerImpl(
+                    id : String,\\
+                    lastName : String,\\
+                    firstName : String
+                )
+            }
+
+            \umlclass[x=0,y=-27]{SpeechImpl}{
+                - id : String\\
+                - speaker : Speaker\\
+                - agendaItem : AgendaItem\\
+                - contents : LinkedList\tl Content\tg\\
+                - video : Video
+            }{
+                $\sim$ SpeechImpl(
+                id : String,\\
+                speaker : Speaker,\\
+                agendaItem : AgendaItem
+                )
+            }
+
+            \umlclass[x=8,y=-20]{VideoImpl}{
+                - id : String\\
+                - session : Session\\
+                - url : String
+            }{
+                $\sim$ VideoImpl(id : String\\
+                session : Session,\\
+                url : String)
+            }
+
+            % implementation relations
+            \umlimpl{AgendaItemImpl}{AgendaItem};
+            \umlimpl{ContentImpl}{Content};
+            \umlimpl{GroupingImpl}{Grouping};
+            \umlimpl{ParliamentFactoryImpl}{ParliamentFactory};
+            \umlimpl{PartyImpl}{Party};
+            \umlimpl{PictureImpl}{Picture};
+            \umlimpl{SpeakerImpl}{Speaker};
+            \umlimpl{SpeechImpl}{Speech};
+            \umlimpl{SessionImpl}{Session};
+            \umlimpl{VideoImpl}{Video};
+
+            \umlinherit{GroupingImpl}{PartyImpl};
+        
+        \end{umlpackage}
+    \end{umlpackage}
+ 
+    % REST
+    \begin{umlpackage}[x=36,y=-12]{rest}
+
+        \umlclass[x=0,y=-5,type=interface]{IRESTEvent}{}{}
+        \umlclass[x=6,y=-5]{PageController}{}{}
+        
+        \umlclass[x=0,y=0,type=interface]{RESTInterface}{}{
+            GetREST()
+            \\PostREST()
+            \\PutREST()
+            \\DeleteREST()
+            \\PatchREST()
+        }
+
+        \umlclass[x=6,y=0]{RESTHandler}{}{
+            + RESTHandler()
+        }
+
+        \umlimpl{RESTHandler}{RESTInterface};
+    \end{umlpackage}
+   
+    % IMPORT
+    \umlimport[geometry=-|-, arm1=2cm,anchors=east and east, stereo=uses]{rest}{Config}
+    \umlimport[geometry=-|-, arm1=2cm,anchors=east and east, stereo=uses]{database}{Config}
+    \umlimport[geometry=-|-, arm1=2cm,anchors=east and east, stereo=uses]{nlp}{Config}
+
+\end{umlpackage}
+
+
+% RESOURCES
+\begin{umlpackage}[x=-12,y=0]{resources}
+
+    \begin{umlpackage}[x=0,y=0]{config}
+    \end{umlpackage}
+
+    \begin{umlpackage}[x=0,y=-4]{doc}
+    \end{umlpackage}
+
+    \begin{umlpackage}[x=0,y=-9]{export}
+    
+        \begin{umlpackage}[x=0,y=0]{pdf output}
+        \end{umlpackage}
+
+        \begin{umlpackage}[x=3,y=0]{tex output}
+        \end{umlpackage}
+
+        \begin{umlpackage}[x=0,y=-3]{xmi output}
+        \end{umlpackage}
+        
+    \end{umlpackage}
+
+    \begin{umlpackage}[x=0,y=-17]{members}
+    \end{umlpackage}
+
+    \begin{umlpackage}[x=0,y=-21]{speeches}
+    \end{umlpackage}
+
+    \begin{umlpackage}[x=0,y=-25]{typesystems}
+    \end{umlpackage}
+
+    \begin{umlpackage}[x=0,y=-29]{web}
+
+        \begin{umlpackage}[x=0,y=0]{js}
+        \end{umlpackage}
+
+        \begin{umlpackage}[x=3,y=0]{pages}
+            \begin{umlpackage}[x=0,y=0]{components}
+            \end{umlpackage}
+        \end{umlpackage}
+
+        \begin{umlpackage}[x=0,y=-3]{styles}
+        \end{umlpackage}
+        
+    \end{umlpackage}
+    
+\end{umlpackage}
+
+\end{tikzpicture}
+}

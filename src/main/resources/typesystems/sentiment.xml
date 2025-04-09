@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>Sentiment</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+    <types>
+        <typeDescription>
+            <name>annotation.SentimentBert</name>
+            <description/>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+
+                <featureDescription>
+                    <name>Id</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+
+                <featureDescription>
+                    <name>Sentiment</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.Double</rangeTypeName>
+                </featureDescription>
+
+                <featureDescription>
+                    <name>Positiv</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.Double</rangeTypeName>
+                </featureDescription>
+
+                <featureDescription>
+                    <name>Neutral</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.Double</rangeTypeName>
+                </featureDescription>
+
+                <featureDescription>
+                    <name>Negativ</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.Double</rangeTypeName>
+                </featureDescription>
+
+            </features>
+        </typeDescription>
+    </types>
+</typeSystemDescription>

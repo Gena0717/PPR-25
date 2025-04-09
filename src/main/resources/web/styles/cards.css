@@ -1,0 +1,67 @@
+a.card{
+    line-height: 0px;
+    display:flex;
+    flex-direction: row;
+    background-color: var(--background-color-light-half);
+    border-radius: var(--border-radius);
+    margin-bottom: 1em;
+    padding:1em 2em;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+a.card > *{
+    color: var(--font-color-main);
+    font-size: var(--font-size-body-large);
+    width:33%;
+    box-sizing: border-box;
+}
+
+a.card:hover{
+    cursor:pointer;
+    transform: scale(1.05);
+    background-color: var(--background-color-light);
+}
+
+a.card:active{
+    cursor:pointer;
+    background-color: var(--background-color-light-half);
+}
+
+.cards-header{
+    line-height: 0px;
+    display:flex;
+    flex-direction: row;
+    background-color: var(--background-color-secondary);
+    border-radius: var(--border-radius);
+    padding: 0.8em 2em;
+    margin-bottom: 1em;
+    text-decoration: none;
+    opacity: 0.6;
+}
+.cards-header p{
+    color: var(--font-color-main);
+    font-size: var(--font-size-body-large);
+    width:33%;
+    box-sizing: border-box;
+}
+
+.collapsible{
+    color: var(--font-color-main);
+    padding: 1em;
+    padding-left:2em;
+    border-radius: var(--border-radius);
+    background-color: var(--background-color-tertiary) !important;
+}
+
+.collapsible:hover{
+    background-color: var(--background-color-secondary)!important;
+}
+
+.active{
+    background-color: var(--background-color-tertiary) !important;
+}
+
+.active:hover{
+    background-color: var(--background-color-secondary)!important;
+}

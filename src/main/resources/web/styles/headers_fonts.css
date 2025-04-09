@@ -1,0 +1,48 @@
+hr{
+    border-bottom: solid 1px var(--background-color-hover);
+    margin: 2.5em 0;
+    opacity: 0.5;
+}
+
+h1{
+    color: var(--font-color-main);
+    font-size: var(--font-size-header-large);
+    font-weight: var(--font-weight-heavy);
+    margin-bottom: calc(var(--font-size-header-large) * 0.9);
+}
+
+h2{
+    color: var(--font-color-main);
+    font-size: var(--font-size-header-medium);
+    font-weight: var(--font-weight-heavy);
+    margin-bottom: calc(var(--font-size-header-medium) * 0.9);
+}
+
+h3{
+    color: var(--font-color-main);
+    font-size: var(--font-size-header-small);
+    font-weight: var(--font-weight-heavy);
+    margin-bottom: calc(var(--font-size-header-small) * 0.9);
+}
+
+p{
+    margin: 5px 0;
+    color:var(--font-color-main);
+    font-size: var(--font-size-body-medium);
+}
+
+p.large{
+    font-size: var(--font-size-body-large);
+}
+
+p.small{
+    font-size: var(--font-size-body-small);
+}
+
+.dim{
+    color: var(--font-color-dim);
+}
+
+.highlight{
+    color: var(--button-color-hover);
+}

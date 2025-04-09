@@ -1,0 +1,25 @@
+\addtocounter{section}{1}
+\setcounter{subsection}{1}
+% WBS
+%update values for WBS1 (progress)
+\renewcommand{\one}   {   100   } %
+\renewcommand{\two}   {   100   } %
+\renewcommand{\three} {   100   } %
+\renewcommand{\four}  {   100   } %
+\renewcommand{\five}  {   100   } %
+
+%Calculate total WBS1
+\FPeval{\result}{clip((\one+\two+\three+\four+\five)/5)}
+
+\ganttgroup[progress=\result]{1: planning}{2025-02-18}{2025-02-23} \\
+
+\ganttbar[name=A, bar inline label node/.style={left=1.5cm}, progress=\one]{\textbf{1.a} gantt chart \oli}{2025-02-18}{2025-02-23} \\
+
+\ganttbar[name=B, bar inline label node/.style={left=1.5cm}, progress=\two]{\textbf{1.b.1} use-case diagram \sophie}{2025-02-18}{2025-02-23} \\
+
+\ganttbar[name=C, bar inline label node/.style={left=1.5cm}, progress=\three]{\textbf{1.b.2} class- \& package diagram \sophie\oli}{2025-02-18}{2025-02-23} \\
+
+\ganttbar[name=E, bar inline label node/.style={left=1.8cm}, progress=\five]{\textbf{1.c} mock-up \oli}{2025-02-19}{2025-02-23} 
+
+
+\\ \ganttmilestone[name=MS1, progress=\result, milestone inline label node/.style={right=0.2cm}, progress label text={}]{\textbf{Milestone:} planning complete}{2025-02-22}

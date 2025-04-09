@@ -1,0 +1,48 @@
+Sophie hat in Woche 1 an der Readme gearbeitet und angefangen, die UML Diagramme zu erstellen. Außerdem hat sie eine
+Übersetzung für Bundestagsvokabular erarbeitet und in die Readme eingefügt. In Woche 2 hat sie diese Klassendiagramme
+weiter bearbeitet, die Klassen des parliament Packages hinzugefügt und finalisiert, sowie entsprechende Implementationen
+ergänzt. In Woche 3 folgte eine Modifikation der Funktionsdokumentation, die Verbesserung der Interaktionen zwischen
+den Parlamentsklassen und das Hinzufügen eines Sets of Speaker zu Speaker sowie die Integration der Speaker in die
+MongoDB. In Woche 4 begann Sophie mit dem Tex-Export, legte dafür einen entsprechenden Ordner an und erstellte eine
+TexFactory. In Woche 5 erweiterte sie ihre Javadoc-Dokumentation, kümmerte sich um eine rudimentäre PDF-Erstellung,
+fügte Klassen für den XMI-Export hinzu und modifizierte erneut die UML-Diagramme.
+
+Oliwia hat in Woche 1 die Readme und die pom-Datei eingefügt, mit Sophie an den UML Diagrammen gearbeitet, ToDos
+hinzugefügt sowie Mongo-Methoden und Imports implementiert und zusätzlich ein Gantt-Chart und GitLab Milestones erstellt.
+In Woche 2 beendete sie das Mock-up und begann damit, Daten vom Bundestag herunterzuladen. Sie lud Protokolle über eine
+Sitemap herunter, richtete einen API-Endpoint ein und entwickelte einen Video-Downloader. Zudem kapselte sie Methoden
+ein, und fing an, MDB zu parsen. In Woche 3 fügte sie weitere Methoden und ein Mongo-Interface hinzu. Anschließend
+speicherte sie sämtliche Speaker in der MongoDB und las die Reden in die Datenbank ein. In Woche 4 fügte sie Videos zur
+MongoDB hinzu, passte CSS etwas an und implementierte noch einige weitere REST-Routen. In Woche 5 modifizierte Oliwia
+ihren Video-Scraper, erstellte ein paar FTL-Dateien, arbeitete am Export mit, finalisierte das Handbuch und legte
+weitere FTLs für den Export an.
+
+
+In der ersten Woche bereitete sich Ishak umfassend vor und konzipierte bereits grundsätzliche Ideen für Frontend und
+Backend. In der zweiten Woche implementierte er erste REST-Routen, um eine Kommunikation mit dem Server über
+verschiedene Endpoints zu ermöglichen. Zudem setzte er ein Eventsystem auf, das die Verbindung zu den Endpoints
+aufrechterhält und eine zuverlässige Kommunikation sicherstellt.
+
+In der dritten Woche dokumentierte Ishak die REST-Routen mithilfe von Swagger IO und ergänzte den RESTHandler sowie den
+PageController durch ausführliche Javadoc-Kommentare. Um die Darstellung der FTL-Dateien zu vereinfachen, implementierte
+er verschiedene Methoden und entwickelte zudem ein Interface, das die Ausgabe von HTML-Quellcode direkt aus der
+Java-Applikation ermöglicht. Parallel dazu erstellte er die FTL-Dateien und Styles für die jeweiligen Seiten.
+
+In der vierten Woche konzipierte und optimierte Ishak die Suchfunktionen und Queries, indem er mehrere Modifikationen
+vornahm und Datenbankaggregationen durchführte, um kollektionsübergreifende Suchen zu ermöglichen. Darüber hinaus
+erweiterte er die Bilddatenbank, sodass nun mehrere Bilder eines Abgeordneten gespeichert werden können,
+und integrierte diese Funktionalität auf der Speakerpage. Parallel dazu nahm er weitere Anpassungen am Frontend vor.
+
+In der fünften Woche richtete Ishak den automatischen Download der Videodateien von der Bundestagsseite in die MongoDB
+ein. Abschließend erstellte er die NLP-Charts zu den Reden und fügte entsprechende Filteroptionen hinzu.
+
+
+In der ersten Projektwoche bereitete sich Genadij mit der Gruppe auf die Aufgaben vor und entwickelte einen
+detaillierten Plan für das weitere Vorgehen. In der zweiten Woche stellte er die Verbindung zur MongoDB her und
+importierte bereits annotierte Reden in die Datenbank. Anschließend implementierte er den NLP-Handler, um die
+notwendigen Funktionen für die Sprachverarbeitung bereitzustellen.
+
+In der vierten Woche optimierte und erweiterte Genadij die Methoden zur Verarbeitung der Reden(DUUI-Reader), sodass eine
+effizientere und präzisere Analyse gewährleistet war. In der fünften Woche führte er eine umfassende NLP-Analyse der
+Videos durch und stellte sicher, dass die entsprechenden JCas-Daten erfolgreich deserialisiert und in der MongoDB
+abgelegt wurden.

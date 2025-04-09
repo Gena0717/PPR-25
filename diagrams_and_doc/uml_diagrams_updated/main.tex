@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{tikz-uml}
+\usetikzlibrary {positioning} % for relative positioning
+\usepackage{graphicx}
+\usepackage{xpatch} % for patching things in packages
+\usepackage{standalone}
+\usepackage{pdfpages}
+\setlength{\parskip}{0cm}
+\setlength{\parindent}{0cm}
+
+\usepackage{fancyhdr}
+ \setlength{\headheight}{39.49254pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Programmierpraktikum WiSe 2024/25\\Daszczynska, Oliwia Malgorzata (6950239)\\Kaiser, Sophie Renate Hildegard (6949963)}
+\rhead{Bouaziz, Ishak (6774123)\\Vorontsov, Genadij (7697757)}
+
+\author{Sophie Renate Hildegard Kaiser, Oliwia Malgorzata Daszczynska} % made it collaborating on Overleaf
+
+\newcommand{\tl}{\textless}
+\newcommand{\tg}{\textgreater}
+
+\tikzumlset{fill usecase=blue!15} % slightly less saturated than the default, looks more readable in my opinion
+\xpatchcmd{\umlusecase}{width/.initial=auto}{width/.initial=3cm}{} % set the initial width of usecases to a fixed value instead of letting it set width automatically
+
+
+\begin{document}
+
+{\huge\textbf{Multimodal Parliament Explorer}}
+\begin{itemize}
+\item[page 2:] 1.b Project Planning and Design - UML Diagrams
+\item[page 3:] 1.b.2 Package and Class Diagram
+\end{itemize}
+\eject
+
+\section*{1.b Project Planning and Design - UML Diagrams}
+
+% USE CASE DIAGRAM
+\subsection*{1.b.1 Use Case Diagram}
+\pdfpagewidth=45cm \pdfpageheight=45cm
+\input{use_case_diagram}
+
+
+
+% CLASS & PACKAGE DIAGRAM
+\eject
+\pdfpagewidth=80cm \pdfpageheight=90cm
+\subsection*{1.b.2 Package and Class Diagram}
+\input{class_diagram}
+\eject
+
+
+\end{document}

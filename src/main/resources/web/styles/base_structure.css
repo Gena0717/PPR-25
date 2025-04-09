@@ -1,0 +1,47 @@
+header{
+    display:flex;
+    flex-direction: row;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    padding: 0 10%;
+    height:5em;
+    background-color:var(--background-color-secondary);
+    align-items: center;
+    z-index:10;
+}
+
+body{
+    font-family: "Segoe UI", "Roboto", "Oxygen Sans", "Ubuntu", "Cantarell", "Helvetica", sans-serif;
+    color:var(--font-color-main);
+    background-color: var(--background-color-main);
+
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    vertical-align: baseline;
+
+    -webkit-text-size-adjust: none;
+}
+
+/* main content */
+div.inner{
+    margin: 10%;
+}
+
+footer{
+    position:relative;
+    bottom:0px;
+    background-color:var(--background-color-light-half);
+    text-align:center;
+    min-height:5em;
+    min-width:100%;
+    margin:0;
+    padding:2em 10%;
+}
+
+footer > p{
+    color:var(--font-color-main);
+    font-size:var(--font-size-body-small);
+}
